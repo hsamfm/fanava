@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <script src="{% static 'js/algoliasearch.js' %}"></script>
+    <script src="{% static 'js/algoliasearch.helper.js' %}"></script>
+    <script src="{% static 'js/algoliasearchLite.js' %}"></script>
+    <title>فروشگاه محصولات فناوا</title>
+</head>
+<body dir="rtl">
+<div class="container-fluid store-page">
+    <nav class="navbar navbar-expand-lg sticky-top main-nav extra-nav page-nav w-100 row p-0">
+        <a class="navbar-brand ml-5" href="/">فناوا</a>
+        <button class="navbar-toggler index-nav ml-4" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars menu-icon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav text-center p-0">
+                <a class="nav-item nav-link px-3 active" href="{% url 'index' %}#Home-section">خانه <span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link px-3" href="{% url 'index' %}#About-Us-Section">درباره ما</a>
+                <a class="nav-item nav-link px-3" href="{% url 'index' %}#Our-Services-Section">خدمات ما</a>
+                <a class="nav-item nav-link px-3" href="{% url 'index' %}#contact-us-section">ارتباط با ما</a>
+                <a class="nav-item nav-link px-3" href="{% url 'blog-index' %}">وبلاگ</a>
+            </div>
+        </div>
+        <span class="user-account-access">
+                <a href="{% url 'users-login' %}" class="px-4 py-2 ml-3">ورود</a>
+                <a href="{% url 'users-register' %}" class="px-4 py-2 ml-3">ثبت نام</a>
+            </span>
+    </nav>
+    <div class="row store-main my-5 d-flex justify-content-between py-5 px-3 ">
+        <!-- flex-md-row-reverse -->
+
+        <div class="product-category row m-0  col-md-3 p-0 mb-3">
+
+
+            <h4 class="col-12 text-center text-white p-0 py-3">دسته بندی ها</h4>
+            <ul class="col-12 p-1 product-list text-right px-3 mb-0">
+
+                <li class="sup-list my-3">
+                    {% for cat in category %}
+
+                        <span class="sup-list-title">
+                    <i class="fas fa-plus"></i>
+                            <!-- <i class="far fa-window-minimize"></i> -->
+                            {{ cat }}<br>
+                    </span>
+
+                        <ul class="sub-list px-5 pt-3">
+                            <li class="sub-list-item">
+                                <a href="#">زیر دسته</a>
+                            </li>
+                            <li class="sub-list-item">
+                                <a href="#">زیر دسته</a>
+                            </li>
+                            <li class="sub-list-item">
+                                <a href="#">زیر دسته</a>
+                            </li>
+                            <li class="sub-list-item">
+                                <a href="#">زیر دسته</a>
+                            </li>
+                        </ul>
+                    {% endfor %}
+
+                </li>
+
+            </ul>
+            <form class="form my-2 my-lg-0 px-1 col-12 p-0 px-3 row m-0 search-product pt-3">
+                <input class="form-control news-search ml-1 " type="search" placeholder="نام یا دسته بندی محصول"
+                       aria-label="Search">
+                <button class="btn btn-base-red my-2 w-100" type="submit"><i class="fas fa-search ml-2"></i> جستجو
+                </button>
+            </form>
+        </div>
+
+
+        <div class="row m-0 store-section col-md-9 p-0 pr-2">
+            <div class="row col-12 p-0 m-0 mx-auto product-slider new-products mb-3">
+                <div class="slider-header d-flex justify-content-between row m-0 col-12 p-0 py-2">
+                    <span class="product-slider-title col-6 col-md-4 col-lg-3 p-0 text-center">جدیدترین محصولات</span>
+                    <span class="more-prodects col-1 p-0 text-center"><a href="#"><i class="fas fa-ellipsis-h"></i></a></span>
+                </div>
+                <div class="product-slider-section row m-0 col-12 p-0 py-3 px-3 mb-2">
+                    {#                    <!-- <div class="next-btn col-1 p-0 text-center ">#}
+                    {#                        <i class="fas fa-chevron-right fa-2x"></i>#}
+                    {#                    </div> -->#}
+                    {#                    <!-- <div class="slider-products-section col-10 p-0 py-2 row m-0  mx-auto d-flex flex-nowrap"> -->#}
+                    {% for data in product %}
+                        {% if data.is_free == False %}
+                            <div class="product-card col-3 p-0 row m-0 px-1">
+                                <div class="product-img col-12 p-0">
+                                    <img src="{{ data.image.url }}" alt="" class="w-100">
+                                </div>
+                                <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                                    <p class="product-name col-12 p-0 text-center mt-2 mb-4">{{ data.name }}</p>
+                                    <div class="buy-product-part col-12 p-0">
+                                        <p class="product-price w-100 text-center">{{ data.price }}</p>
+                                        <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                            <a href="{{ data.get_absolute_url }}"
+                                               class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                                    class="fas fa-eye ml-2"></i>مشاهده </a>
+                                            <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                                    class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <!-- </div> -->
+                    <!-- <div class="prev-btn col-1 p-0 text-center ">
+                        <i class="fas fa-chevron-left fa-2x"></i>
+                    </div> -->
+                </div>
+            </div>
+            <div class="row col-12 p-0 m-0 mx-auto product-slider more-selled-products mb-3">
+                <div class="slider-header d-flex justify-content-between row m-0 col-12 p-0 py-2">
+                    <span class="product-slider-title col-6 col-md-4 col-lg-3 p-0 text-center">محصولات پرفروش</span>
+                    <span class="more-prodects col-1 p-0 text-center"><a href="#"><i class="fas fa-ellipsis-h"></i></a></span>
+                </div>
+                <div class="product-slider-section row m-0 col-12 p-0 py-3 px-3 mb-2">
+                    <!-- <div class="next-btn col-1 p-0 text-center ">
+                        <i class="fas fa-chevron-right fa-2x"></i>
+                    </div> -->
+                    <!-- <div class="slider-products-section col-10 p-0 py-2 row m-0  mx-auto d-flex flex-nowrap"> -->
+                    <div class="product-card col-3 p-0 row m-0 px-1">
+                        <div class="product-img col-12 p-0">
+                            <img src="{% static 'img/lock.png' %}" all="" class="w-100">
+                        </div>
+                        <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                            <p class="product-name col-12 p-0 text-center mt-2 mb-4">نام محصول</p>
+                            <div class="buy-product-part col-12 p-0">
+                                <p class="product-price w-100 text-center">15,000</p>
+                                <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-eye ml-2"></i>مشاهده </a>
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card col-3 p-0 row m-0 px-1">
+                        <div class="product-img col-12 p-0">
+                            <img src="{% static 'img/main-back.jpg' %}" alt="" class="w-100">
+                        </div>
+                        <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                            <p class="product-name col-12 p-0 text-center mt-2 mb-4">نام محصول</p>
+                            <div class="buy-product-part col-12 p-0">
+                                <p class="product-price w-100 text-center">15,000</p>
+                                <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-eye ml-2"></i>مشاهده </a>
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card col-3 p-0 row m-0 px-1">
+                        <div class="product-img col-12 p-0">
+                            <img src="{% static 'img/lock.png' %}" all="" class="w-100">
+                        </div>
+                        <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                            <p class="product-name col-12 p-0 text-center mt-2 mb-4">نام محصول</p>
+                            <div class="buy-product-part col-12 p-0">
+                                <p class="product-price w-100 text-center">15,000</p>
+                                <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-eye ml-2"></i>مشاهده </a>
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card col-3 p-0 row m-0 px-1">
+                        <div class="product-img col-12 p-0">
+                            <img src="{% static 'img/slider-2.jpg' %}" alt="" class="w-100">
+                        </div>
+                        <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                            <p class="product-name col-12 p-0 text-center mt-2 mb-4">نام محصول</p>
+                            <div class="buy-product-part col-12 p-0">
+                                <p class="product-price w-100 text-center">15,000</p>
+                                <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-eye ml-2"></i>مشاهده </a>
+                                    <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                            class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- </div> -->
+                    <!-- <div class="prev-btn col-1 p-0 text-center ">
+                        <i class="fas fa-chevron-left fa-2x"></i>
+                    </div> -->
+                </div>
+            </div>
+            <div class="row col-12 p-0 m-0 mx-auto product-slider free-products">
+                <div class="slider-header d-flex justify-content-between row m-0 col-12 p-0 py-2">
+                    <span class="product-slider-title col-6 col-md-4 col-lg-3 p-0 text-center">محصولات رایگان</span>
+                    <span class="more-prodects col-1 p-0 text-center"><a href="#"><i class="fas fa-ellipsis-h"></i></a></span>
+                </div>
+                <div class="product-slider-section row m-0 col-12 p-0 py-3 px-3 mb-2">
+                    <!-- <div class="next-btn col-1 p-0 text-center ">
+                        <i class="fas fa-chevron-right fa-2x"></i>
+                    </div> -->
+                    <!-- <div class="slider-products-section col-10 p-0 py-2 row m-0  mx-auto d-flex flex-nowrap"> -->
+                    {% for data in product %}
+                        {% if data.is_free == 1 %}
+                            <div class="product-card col-3 p-0 row m-0 px-1">
+                                <div class="product-img col-12 p-0">
+                                    <img src="{{ data.image.url }}" all="" class="w-100">
+                                </div>
+                                <div class="product-info-section col-12 p-0 d-flex justify-content-around align-self-end row m-0">
+                                    <p class="product-name col-12 p-0 text-center mt-2 mb-4">{{ data.name }}</p>
+                                    <div class="buy-product-part col-12 p-0">
+                                        <p class="product-price w-100 text-center text-success">رایگان</p>
+                                        <div class="row m-0 col-12 p-0 product-buy-buttons">
+                                            <a href="{{ data.get_absolute_url }}"
+                                               class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                                    class="fas fa-eye ml-2"></i>مشاهده </a>
+                                            <a href="#" class="btn-base-red col-12 p-0 text-center py-2 my-1"><i
+                                                    class="fas fa-cart-plus ml-2"></i></i>افزودن به سبد</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+
+                    <!-- </div> -->
+                    <!-- <div class="prev-btn col-1 p-0 text-center ">
+                        <i class="fas fa-chevron-left fa-2x"></i>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="row py-3">
+        <div class="mx-auto">
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2">
+                <h3 class="text-white mx-auto mt-2 mb-3 text-center"> آیا به کمک نیاز دارید؟</h3>
+                <p class="h6 text-white text-center px-5  footer-message">تیم فناروان هوشمند ایده پرداز در زمینه های
+                    مختلف همچون، اتوماسیون پارکینگ، پردازش تصویر، اتوماسیون اداری و صنعتی و... آماده خدمت رسانی به
+                    هموطنان عزیز می باشد</p>
+            </div>
+        </div>
+        <div class="col-12 mx-auto p-0">
+            <div class="col-xs-12 col-sm-12 col-md-12 p-0 mt-2 mt-sm-5 ">
+                <p class="col-12 mx-auto text-center follow-us">ما را دنبال کنید</p>
+                <ul class="list-unstyled list-inline social text-center">
+                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                            class="fab fa-instagram  mx-auto col-md-12 text-center mx-auto"></i></a></li>
+                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                            class="fab fa-telegram-plane mx-auto col-md-12 text-center mx-auto"></i></a></li>
+                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                            class="fab fa-whatsapp mx-auto col-md-12 text-center mx-auto"></i></a></li>
+                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                            class="fab fa-twitter mx-auto col-md-12 text-center mx-auto"></i></a></li>
+                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                            class="fas fa-envelope mx-auto col-md-12 text-center mx-auto"></i></a></li>
+                </ul>
+            </div>
+            <hr/>
+        </div>
+        <div class="mx-auto">
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                <p>قزوین.بلوار نخبگان. کیلومتر 2 جاده باراجین.پارک علم وفناوری استان قزوین واحد 28/1</p>
+                <p class="ph-number">تلفن تماس با ما: 33656232-028</p>
+                <p class="h6 copy-right">&copy تمامی حقوق این سایت متعلق به شرکت
+                <p class="base-red">فناوا</p> است.
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery.slim.min.js' %}"></script>
+
+<script src="{% static 'js/popper.min.js' %}"></script>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
