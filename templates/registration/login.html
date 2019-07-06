@@ -41,25 +41,25 @@
     <div class="login-box row mt-5">
         <h3 class="text-center mt-5 mx-auto col-12">وارد حساب کاربری خود شوید</h3>
         <div class="login-form col-11 col-sm-9 col-md-7 col-lg-5 py-5 text-right mx-auto">
-            <input type="hidden" name="_blank" value="{{ next }}">
-            <form>
+            <form action="{% url 'users-login' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="exampleInputEmail1">نام کاربری :</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="نام کاربری خود را وارد کنید">
+                           placeholder="نام کاربری خود را وارد کنید" name="username">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">رمز عبور :</label>
                     <input type="password" class="form-control" id="exampleInputPassword1"
-                           placeholder="رمز عبور خود را وارد کنید">
+                           placeholder="رمز عبور خود را وارد کنید" name="password">
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label mr-3" for="exampleCheck1">مرا به خاطر بسپار</label>
                 </div>
                 <button type="submit" class="btn btn-base-red my-3 w-100 text-center">ورود</button>
+                <a href="{% url 'users-forgetpassword' %}">رمز عبور خود را فراموش کرده ام!!!</a>
             </form>
-            <a href="{% url 'users-forgetpassword' %}">رمز عبور خود را فراموش کرده ام!!!</a>
         </div>
     </div>
 

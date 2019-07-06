@@ -187,9 +187,14 @@
                              class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ user.name }}</a>
+                        {% if user.is_authenticated %}
+                            <a href="#" class="d-block">{{ user }}</a>
+                        {% else %}
+                            <a href="#" class="d-block">Ghost</a>
+                        {% endif %}
                     </div>
                 </div>
+
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">

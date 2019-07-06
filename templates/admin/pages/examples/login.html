@@ -33,9 +33,15 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
+            {% if message_errors %}
+                <h5 class="alert alert-danger">{{ message_errors }}</h5>
+            {% elif message_success %}
+                <h5 class="alert alert-danger">{{ message_success }}</h5>
+            {% endif %}
             <p class="login-box-msg">فرم زیر را تکمیل کنید و ورود بزنید</p>
 
-            <form action="{% url 'users-login' %}" method="post">
+            <form action="{% url 'users-login' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="ایمیل" name="email">
                     <div class="input-group-append">
@@ -58,7 +64,8 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" value="{{ next }}" class="btn btn-primary btn-block btn-flat">ورود</button>
+                        <button type="submit" value="{{ next }}" class="btn btn-primary btn-block btn-flat">ورود
+                        </button>
                     </div>
                     <!-- /.col -->
                 </div>

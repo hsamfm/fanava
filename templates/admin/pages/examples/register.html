@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,49 +33,54 @@
 
     <div class="card">
         <div class="card-body register-card-body">
-            <p class="login-box-msg">ثبت نام کاربر جدید</p>
+            {% if message %}
+                <h4 class="alert alert-success">{{ message }}</h4>
+            {% else %}
+                <p class="login-box-msg">ثبت نام کاربر جدید</p>
 
-            <form action="{% url 'users-register' %}" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="نام و نام خانوادگی" name="username">
-                    <div class="input-group-append">
-                        <span class="fa fa-user input-group-text"></span>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="ایمیل" name="email">
-                    <div class="input-group-append">
-                        <span class="fa fa-envelope input-group-text"></span>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="رمز عبور" name="password">
-                    <div class="input-group-append">
-                        <span class="fa fa-lock input-group-text"></span>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="تکرار رمز عبور" name="password_conf">
-                    <div class="input-group-append">
-                        <span class="fa fa-lock input-group-text"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> با <a href="#">شرایط</a> موافق هستم
-                            </label>
+                <form action="{% url 'users-register' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="نام و نام خانوادگی" name="username">
+                        <div class="input-group-append">
+                            <span class="fa fa-user input-group-text"></span>
                         </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" value="{{ next }}">ثبت نام
-                        </button>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="ایمیل" name="email">
+                        <div class="input-group-append">
+                            <span class="fa fa-envelope input-group-text"></span>
+                        </div>
                     </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="رمز عبور" name="password">
+                        <div class="input-group-append">
+                            <span class="fa fa-lock input-group-text"></span>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="تکرار رمز عبور" name="password_conf">
+                        <div class="input-group-append">
+                            <span class="fa fa-lock input-group-text"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox"> با <a href="#">شرایط</a> موافق هستم
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat" value="{{ next }}">ثبت نام
+                            </button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            {% endif %}
 
             <div class="social-auth-links text-center">
                 <p>- یا -</p>
@@ -88,7 +93,6 @@
                     ثبت نام با گوگل
                 </a>
             </div>
-
             <a href="{% url 'users-login' %}" class="text-center">من قبلا ثبت نام کرده ام</a>
         </div>
         <!-- /.form-box -->
